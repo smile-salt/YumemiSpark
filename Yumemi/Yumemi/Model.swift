@@ -13,15 +13,12 @@ struct jsonString: Codable {
     let date: String
 }
 
-protocol YumemiDelegate {
-    func setWeatherError(alert: String)
-    func setWeatherCondition(type: String)
-    func setMaxTemperature(max: Int)
-    func setMinTemperature(max: Int)
-}
-
 class WeatherDetail {
-    var delegate: YumemiDelegate?
+    
+    var onWeatherError: ((String) -> ())?
+    var onWeatherCondition: ((String) -> ())?
+    var onMaxTemperature: ((Int) -> ())?
+    var onMinTemperature: ((Int) -> ())?
     
     func setWeatherInfo() {
         DispatchQueue.global().async{
@@ -44,14 +41,14 @@ class WeatherDetail {
                 else {
                     return
                 }
-                self.delegate?.setWeatherCondition(type: weatherCondition)
-                self.delegate?.setMaxTemperature(max: maxTemperature)
-                self.delegate?.setMinTemperature(max: minTemperature)
+                self.onWeatherCondition?(weatherCondition)
+                self.onMaxTemperature?(maxTemperature)
+                self.onMinTemperature?(minTemperature)
                 
             } catch YumemiWeatherError.unknownError {
-                self.delegate?.setWeatherError(alert: "エラー　a123456")
+                self.onWeatherError?("エラー　a123456")
             } catch {
-                self.delegate?.setWeatherError(alert: "エラー　c321654")
+                self.onWeatherError?("エラー　c321654")
             }
         }
     }

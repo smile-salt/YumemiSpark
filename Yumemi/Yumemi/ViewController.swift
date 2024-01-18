@@ -19,8 +19,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        weatherDetail.delegate = self
-        
         indicator.hidesWhenStopped = true
         
         NotificationCenter.default.addObserver(
@@ -30,7 +28,17 @@ class ViewController: UIViewController {
             object: nil
         )
         
+        setupWeatherDetailCallbacks()
+        
     }
+    
+    func setupWeatherDetailCallbacks() {
+        weatherDetail.onWeatherError = handleWeatherError
+        weatherDetail.onWeatherCondition = handleWeatherCondition
+        weatherDetail.onMaxTemperature = handleMaxTemperature
+        weatherDetail.onMinTemperature = handleMinTemperature
+    }
+    
     
     @objc func reloadWeather() {
         weatherDetail.setWeatherInfo()
@@ -45,11 +53,11 @@ class ViewController: UIViewController {
         weatherDetail.setWeatherInfo()
     }
     
+    
 }
 
-extension ViewController: YumemiDelegate {
-    
-    func setWeatherError(alert: String) {
+extension ViewController {
+    func handleWeatherError(alert: String) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: alert, message: "時間をおいてもう一度お試しください", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -59,7 +67,7 @@ extension ViewController: YumemiDelegate {
         
     }
     
-    func setWeatherCondition(type: String) {
+    func handleWeatherCondition(type: String) {
         var weatherName = "sunny"
         var tintColor = UIColor.red
         
@@ -84,16 +92,15 @@ extension ViewController: YumemiDelegate {
         
     }
     
-    func setMaxTemperature(max: Int) {
+    func handleMaxTemperature(max: Int) {
         DispatchQueue.main.async {
             self.maxTemperature.text = String(max)
         }
     }
     
-    func setMinTemperature(max: Int) {
+    func handleMinTemperature(min: Int) {
         DispatchQueue.main.async {
-            self.minTemperature.text = String(max)
+            self.minTemperature.text = String(min)
         }
     }
-    
 }
