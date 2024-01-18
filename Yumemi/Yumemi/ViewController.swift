@@ -16,7 +16,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
+    
+    @IBAction func closeButton(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
     @IBAction func reloadButton(_ sender: Any) {
         setWeatherImage()
     }

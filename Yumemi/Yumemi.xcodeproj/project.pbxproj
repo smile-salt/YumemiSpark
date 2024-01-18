@@ -14,6 +14,7 @@
 		E172005B2B58A5CC00D0E48B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E172005A2B58A5CC00D0E48B /* Assets.xcassets */; };
 		E172005E2B58A5CC00D0E48B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E172005C2B58A5CC00D0E48B /* LaunchScreen.storyboard */; };
 		E17200672B58A7DF00D0E48B /* YumemiWeather in Frameworks */ = {isa = PBXBuildFile; productRef = E17200662B58A7DF00D0E48B /* YumemiWeather */; };
+		E17200692B58ABCB00D0E48B /* LifeCycleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17200682B58ABCB00D0E48B /* LifeCycleViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		E172005A2B58A5CC00D0E48B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E172005D2B58A5CC00D0E48B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E172005F2B58A5CC00D0E48B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E17200682B58ABCB00D0E48B /* LifeCycleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCycleViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			children = (
 				E17200512B58A5CA00D0E48B /* AppDelegate.swift */,
 				E17200532B58A5CA00D0E48B /* SceneDelegate.swift */,
+				E17200682B58ABCB00D0E48B /* LifeCycleViewController.swift */,
 				E17200552B58A5CA00D0E48B /* ViewController.swift */,
 				E172005A2B58A5CC00D0E48B /* Assets.xcassets */,
 				E17200572B58A5CA00D0E48B /* Main.storyboard */,
@@ -149,6 +152,7 @@
 				E17200562B58A5CA00D0E48B /* ViewController.swift in Sources */,
 				E17200522B58A5CA00D0E48B /* AppDelegate.swift in Sources */,
 				E17200542B58A5CA00D0E48B /* SceneDelegate.swift in Sources */,
+				E17200692B58ABCB00D0E48B /* LifeCycleViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
