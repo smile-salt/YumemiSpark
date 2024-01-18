@@ -88,11 +88,16 @@
                                     <action selector="reloadButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tmc-qB-Xg1"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="qtl-gn-zP5">
+                                <rect key="frame" x="186.66666666666666" y="574.66666666666663" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="qtl-gn-zP5" firstAttribute="top" secondItem="8Q9-xX-EvS" secondAttribute="bottom" constant="40" id="5Mc-mV-wnc"/>
                             <constraint firstItem="8Q9-xX-EvS" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.5" id="6Rd-Qc-ryO"/>
+                            <constraint firstItem="qtl-gn-zP5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Jk8-JH-nzG"/>
                             <constraint firstItem="5z4-KA-tNp" firstAttribute="top" secondItem="8Q9-xX-EvS" secondAttribute="bottom" constant="80" id="PgS-Nf-96Z"/>
                             <constraint firstItem="5z4-KA-tNp" firstAttribute="centerX" secondItem="srG-m1-h1L" secondAttribute="centerX" id="QKl-jb-ORv"/>
                             <constraint firstItem="8Q9-xX-EvS" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="R4d-cz-JuX"/>
@@ -103,6 +108,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="cr8-Dh-g8G"/>
                     <connections>
+                        <outlet property="indicator" destination="qtl-gn-zP5" id="CyA-of-Mkp"/>
                         <outlet property="maxTemperature" destination="srG-m1-h1L" id="j2G-7f-C0D"/>
                         <outlet property="minTemperature" destination="46p-tP-NdA" id="9j3-ij-MiL"/>
                         <outlet property="weatherImage" destination="GbT-1Q-5SN" id="VHa-Fv-uyN"/>

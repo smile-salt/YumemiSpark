@@ -14,11 +14,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var maxTemperature: UILabel!
     @IBOutlet weak var minTemperature: UILabel!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         weatherDetail.delegate = self
+        
+        indicator.hidesWhenStopped = true
         
         NotificationCenter.default.addObserver(
             self,
@@ -38,6 +41,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func reloadButton(_ sender: Any) {
+        indicator.startAnimating()
         weatherDetail.setWeatherInfo()
     }
     
@@ -46,9 +50,12 @@ class ViewController: UIViewController {
 extension ViewController: YumemiDelegate {
     
     func setWeatherError(alert: String) {
-        let alert = UIAlertController(title: alert, message: "時間をおいてもう一度お試しください", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: alert, message: "時間をおいてもう一度お試しください", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            self.indicator.stopAnimating()
+        }
         
     }
     
@@ -69,17 +76,24 @@ extension ViewController: YumemiDelegate {
         default:
             break
         }
-        weatherImage.image = UIImage(named: weatherName)
-        weatherImage.tintColor = tintColor
+        DispatchQueue.main.async {
+            self.weatherImage.image = UIImage(named: weatherName)
+            self.weatherImage.tintColor = tintColor
+            self.indicator.stopAnimating()
+        }
         
     }
     
     func setMaxTemperature(max: Int) {
-        maxTemperature.text = String(max)
+        DispatchQueue.main.async {
+            self.maxTemperature.text = String(max)
+        }
     }
     
     func setMinTemperature(max: Int) {
-        minTemperature.text = String(max)
+        DispatchQueue.main.async {
+            self.minTemperature.text = String(max)
+        }
     }
     
 }
