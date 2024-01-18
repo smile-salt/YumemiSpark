@@ -39,9 +39,10 @@ class ViewController: UIViewController {
         weatherDetail.onMinTemperature = handleMinTemperature
     }
     
-    
     @objc func reloadWeather() {
-        weatherDetail.setWeatherInfo()
+        Task{
+            await weatherDetail.setWeatherInfo()
+        }
     }
     
     @IBAction func closeButton(_ sender: Any) {
@@ -50,7 +51,9 @@ class ViewController: UIViewController {
     
     @IBAction func reloadButton(_ sender: Any) {
         indicator.startAnimating()
-        weatherDetail.setWeatherInfo()
+        Task{
+            await weatherDetail.setWeatherInfo()
+        }
     }
     
     

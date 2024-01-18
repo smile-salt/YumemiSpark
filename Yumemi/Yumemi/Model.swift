@@ -20,8 +20,8 @@ class WeatherDetail {
     var onMaxTemperature: ((Int) -> ())?
     var onMinTemperature: ((Int) -> ())?
     
-    func setWeatherInfo() {
-        DispatchQueue.global().async{
+    func setWeatherInfo() async{
+
             let sendJsonString = jsonString(area:"tokyo", date:"2020-04-01T12:00:00+09:00")
             
             do {
@@ -31,7 +31,7 @@ class WeatherDetail {
                     return
                 }
                 
-                let responseWeatherString = try YumemiWeather.syncFetchWeather(jsonValue)
+                let responseWeatherString = try await YumemiWeather.asyncFetchWeather(jsonValue)
                 
                 guard let jsonData = responseWeatherString.data(using: .utf8),
                       let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any],
@@ -51,5 +51,5 @@ class WeatherDetail {
                 self.onWeatherError?("エラー　c321654")
             }
         }
-    }
+
 }
