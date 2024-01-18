@@ -27,10 +27,17 @@ class ViewController: UIViewController {
     @IBAction func reloadButton(_ sender: Any) {
         weatherDetail.setWeatherImage()
     }
-
+    
 }
 
 extension ViewController: YumemiDelegate {
+    
+    func setWeatherError(alert: String) {
+        let alert = UIAlertController(title: alert, message: "時間をおいてもう一度お試しください", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+        
+    }
     
     func setWeatherImage(type: String) {
         var weatherName = "sunny"
