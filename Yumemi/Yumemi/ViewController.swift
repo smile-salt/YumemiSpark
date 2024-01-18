@@ -12,6 +12,8 @@ class ViewController: UIViewController {
     let weatherDetail = WeatherDetail()
     
     @IBOutlet weak var weatherImage: UIImageView!
+    @IBOutlet weak var maxTemperature: UILabel!
+    @IBOutlet weak var minTemperature: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +27,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func reloadButton(_ sender: Any) {
-        weatherDetail.setWeatherImage()
+        weatherDetail.setWeatherInfo()
     }
     
 }
@@ -39,7 +41,7 @@ extension ViewController: YumemiDelegate {
         
     }
     
-    func setWeatherImage(type: String) {
+    func setWeatherCondition(type: String) {
         var weatherName = "sunny"
         var tintColor = UIColor.red
         
@@ -59,6 +61,14 @@ extension ViewController: YumemiDelegate {
         weatherImage.image = UIImage(named: weatherName)
         weatherImage.tintColor = tintColor
         
+    }
+    
+    func setMaxTemperature(max: Int) {
+        maxTemperature.text = String(max)
+    }
+    
+    func setMinTemperature(max: Int) {
+        minTemperature.text = String(max)
     }
     
 }
