@@ -20,6 +20,17 @@ class ViewController: UIViewController {
         
         weatherDetail.delegate = self
         
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(reloadWeather),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+        
+    }
+    
+    @objc func reloadWeather() {
+        weatherDetail.setWeatherInfo()
     }
     
     @IBAction func closeButton(_ sender: Any) {
