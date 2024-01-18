@@ -8,6 +8,11 @@
 import Foundation
 import YumemiWeather
 
+struct jsonString: Codable {
+    let area: String
+    let date: String
+}
+
 protocol YumemiDelegate {
     func setWeatherError(alert: String)
     func setWeatherCondition(type: String)
@@ -19,15 +24,16 @@ class WeatherDetail {
     var delegate: YumemiDelegate?
     
     func setWeatherInfo() {
-        let sendJsonString = """
-{
-    "area": "tokyo",
-    "date": "2020-04-01T12:00:00+09:00"
-}
-"""
+        let sendJsonString = jsonString(area:"tokyo", date:"2020-04-01T12:00:00+09:00")
         
         do {
-            let responseWeatherString = try YumemiWeather.fetchWeather(sendJsonString)
+            let encoder = JSONEncoder()
+            let jsonData = try encoder.encode(sendJsonString)
+            guard let jsonValue = String(data: jsonData, encoding: .utf8) else {
+                return
+            }
+            
+            let responseWeatherString = try YumemiWeather.fetchWeather(jsonValue)
             
             guard let jsonData = responseWeatherString.data(using: .utf8),
                   let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any],
