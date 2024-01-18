@@ -6,15 +6,18 @@
 //
 
 import UIKit
-import YumemiWeather
 
 class ViewController: UIViewController {
-
+    
+    let weatherDetail = WeatherDetail()
+    
     @IBOutlet weak var weatherImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        weatherDetail.delegate = self
+        
     }
     
     @IBAction func closeButton(_ sender: Any) {
@@ -22,16 +25,18 @@ class ViewController: UIViewController {
     }
     
     @IBAction func reloadButton(_ sender: Any) {
-        setWeatherImage()
+        weatherDetail.setWeatherImage()
     }
+
+}
+
+extension ViewController: YumemiDelegate {
     
-    func setWeatherImage() {
-        let responseWeatherString = YumemiWeather.fetchWeatherCondition()
-        
+    func setWeatherImage(type: String) {
         var weatherName = "sunny"
         var tintColor = UIColor.red
         
-        switch responseWeatherString {
+        switch type {
         case "sunny":
             weatherName = "sunny"
             tintColor = UIColor.red
@@ -48,5 +53,5 @@ class ViewController: UIViewController {
         weatherImage.tintColor = tintColor
         
     }
+    
 }
-
