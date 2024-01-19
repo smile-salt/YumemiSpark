@@ -15,12 +15,10 @@ struct jsonString: Codable {
 
 class WeatherDetail {
     
-    var onWeatherError: ((String) -> ())?
-    var onWeatherCondition: ((String) -> ())?
-    var onMaxTemperature: ((Int) -> ())?
-    var onMinTemperature: ((Int) -> ())?
+    var handleWeatherCondition: ((String,Int,Int) -> ())?
+    var handleWeatherErrorMessage: ((String) -> ())?
     
-    func setWeatherInfo() {
+    func setWeatherInfo(handle: (String,Int,Int) -> ()) {
         DispatchQueue.global().async{
             let sendJsonString = jsonString(area:"tokyo", date:"2020-04-01T12:00:00+09:00")
             
@@ -41,14 +39,18 @@ class WeatherDetail {
                 else {
                     return
                 }
-                self.onWeatherCondition?(weatherCondition)
-                self.onMaxTemperature?(maxTemperature)
-                self.onMinTemperature?(minTemperature)
+                DispatchQueue.main.async {
+                    self.handleWeatherCondition?(weatherCondition,maxTemperature,minTemperature)
+                }
                 
             } catch YumemiWeatherError.unknownError {
-                self.onWeatherError?("エラー　a123456")
+                DispatchQueue.main.async {
+                    self.handleWeatherErrorMessage?("エラー a123456")
+                }
             } catch {
-                self.onWeatherError?("エラー　c321654")
+                DispatchQueue.main.async {
+                    self.handleWeatherErrorMessage?("エラー b654321")
+                }
             }
         }
     }
