@@ -23,19 +23,22 @@ class ViewController: UIViewController {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(reloadWeather),
+            selector: #selector(appForeground),
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
-        
+    }
+    
+    @objc func appForeground() {
+        reloadWeather()
     }
     
     @objc func reloadWeather() {
         indicator.startAnimating()
         weatherDetail.setWeatherInfo { result in
-            DispatchQueue.main.async{
-                self.indicator.stopAnimating()
-            }
+            
+            self.indicator.stopAnimating()
+            
             switch result {
             case .success(let (weather, max, min)):
                 self.complitionWeather(weather: weather, max: max, min: min)
@@ -43,7 +46,6 @@ class ViewController: UIViewController {
                 self.completionWeatherError(alert: "Error: \(error.localizedDescription)")
             }
         }
-        
     }
     
     
@@ -52,20 +54,16 @@ class ViewController: UIViewController {
     }
     
     @IBAction func reloadButton(_ sender: Any) {
-        indicator.startAnimating()
         reloadWeather()
     }
     
-}
-
-extension ViewController {
+    
+    
     func completionWeatherError(alert: String) {
-        DispatchQueue.main.async {
-            let alert = UIAlertController(title: alert, message: "時間をおいてもう一度お試しください", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            self.indicator.stopAnimating()
-        }
+        let alert = UIAlertController(title: alert, message: "時間をおいてもう一度お試しください", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        self.indicator.stopAnimating()
         
     }
     
@@ -86,13 +84,11 @@ extension ViewController {
         default:
             break
         }
-        DispatchQueue.main.async {
-            self.weatherImage.image = UIImage(named: weatherName)
-            self.weatherImage.tintColor = tintColor
-            self.maxTemperature.text = String(max)
-            self.minTemperature.text = String(min)
-            self.indicator.stopAnimating()
-        }
         
+        self.weatherImage.image = UIImage(named: weatherName)
+        self.weatherImage.tintColor = tintColor
+        self.maxTemperature.text = String(max)
+        self.minTemperature.text = String(min)
     }
+    
 }
