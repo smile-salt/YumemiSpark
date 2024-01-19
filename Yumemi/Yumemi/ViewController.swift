@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         reloadWeather()
     }
     
-    @objc func reloadWeather() {
+    func reloadWeather() {
         indicator.startAnimating()
         weatherDetail.setWeatherInfo { result in
             
@@ -48,7 +48,6 @@ class ViewController: UIViewController {
         }
     }
     
-    
     @IBAction func closeButton(_ sender: Any) {
         dismiss(animated: true)
     }
@@ -57,13 +56,10 @@ class ViewController: UIViewController {
         reloadWeather()
     }
     
-    
-    
     func completionWeatherError(alert: String) {
         let alert = UIAlertController(title: alert, message: "時間をおいてもう一度お試しください", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
-        self.indicator.stopAnimating()
         
     }
     
@@ -89,6 +85,7 @@ class ViewController: UIViewController {
         self.weatherImage.tintColor = tintColor
         self.maxTemperature.text = String(max)
         self.minTemperature.text = String(min)
+        
     }
     
 }
