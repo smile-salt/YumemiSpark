@@ -28,21 +28,20 @@ class ViewController: UIViewController {
             object: nil
         )
         
-        setupWeatherDetailCallbacks()
+        weatherDetail.handleWeatherCondition = {weatherImage, maxTemperature, minTemperature
+            in
+            self.complitionWeather(weatherCondition: weatherImage, maxTemperature: maxTemperature, minTemperature: minTemperature)
+        }
+        
+        weatherDetail.handleWeatherErrorMessage = {errormessage
+            in
+            self.complitionWeatherError(alert: errormessage)
+        }
         
     }
     
-    func setupWeatherDetailCallbacks() {
-        weatherDetail.onWeatherError = handleWeatherError
-        weatherDetail.onWeatherCondition = handleWeatherCondition
-        weatherDetail.onMaxTemperature = handleMaxTemperature
-        weatherDetail.onMinTemperature = handleMinTemperature
-    }
-    
     @objc func reloadWeather() {
-        Task{
-            await weatherDetail.setWeatherInfo()
-        }
+        weatherDetail.setWeatherInfo(handle: complitionWeather(weatherCondition:maxTemperature:minTemperature:))
     }
     
     @IBAction func closeButton(_ sender: Any) {
@@ -51,16 +50,13 @@ class ViewController: UIViewController {
     
     @IBAction func reloadButton(_ sender: Any) {
         indicator.startAnimating()
-        Task{
-            await weatherDetail.setWeatherInfo()
-        }
+        weatherDetail.setWeatherInfo(handle: complitionWeather(weatherCondition:maxTemperature:minTemperature:))
     }
-    
     
 }
 
 extension ViewController {
-    func handleWeatherError(alert: String) {
+    func complitionWeatherError(alert: String) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: alert, message: "時間をおいてもう一度お試しください", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -70,11 +66,11 @@ extension ViewController {
         
     }
     
-    func handleWeatherCondition(type: String) {
+    func complitionWeather(weatherCondition: String, maxTemperature: Int, minTemperature: Int) {
         var weatherName = "sunny"
         var tintColor = UIColor.red
         
-        switch type {
+        switch weatherCondition {
         case "sunny":
             weatherName = "sunny"
             tintColor = UIColor.red
@@ -90,20 +86,10 @@ extension ViewController {
         DispatchQueue.main.async {
             self.weatherImage.image = UIImage(named: weatherName)
             self.weatherImage.tintColor = tintColor
+            self.maxTemperature.text = String(maxTemperature)
+            self.minTemperature.text = String(minTemperature)
             self.indicator.stopAnimating()
         }
         
-    }
-    
-    func handleMaxTemperature(max: Int) {
-        DispatchQueue.main.async {
-            self.maxTemperature.text = String(max)
-        }
-    }
-    
-    func handleMinTemperature(min: Int) {
-        DispatchQueue.main.async {
-            self.minTemperature.text = String(min)
-        }
     }
 }

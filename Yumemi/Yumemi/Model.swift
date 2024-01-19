@@ -15,13 +15,11 @@ struct jsonString: Codable {
 
 class WeatherDetail {
     
-    var onWeatherError: ((String) -> ())?
-    var onWeatherCondition: ((String) -> ())?
-    var onMaxTemperature: ((Int) -> ())?
-    var onMinTemperature: ((Int) -> ())?
+    var handleWeatherCondition: ((String,Int,Int) -> ())?
+    var handleWeatherErrorMessage: ((String) -> ())?
     
-    func setWeatherInfo() async{
-
+    func setWeatherInfo(handle: (String,Int,Int) -> ()) {
+        DispatchQueue.global().async{
             let sendJsonString = jsonString(area:"tokyo", date:"2020-04-01T12:00:00+09:00")
             
             do {
@@ -31,7 +29,7 @@ class WeatherDetail {
                     return
                 }
                 
-                let responseWeatherString = try await YumemiWeather.asyncFetchWeather(jsonValue)
+                let responseWeatherString = try YumemiWeather.syncFetchWeather(jsonValue)
                 
                 guard let jsonData = responseWeatherString.data(using: .utf8),
                       let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any],
@@ -41,15 +39,19 @@ class WeatherDetail {
                 else {
                     return
                 }
-                self.onWeatherCondition?(weatherCondition)
-                self.onMaxTemperature?(maxTemperature)
-                self.onMinTemperature?(minTemperature)
+                DispatchQueue.main.async {
+                    self.handleWeatherCondition?(weatherCondition,maxTemperature,minTemperature)
+                }
                 
             } catch YumemiWeatherError.unknownError {
-                self.onWeatherError?("エラー　a123456")
+                DispatchQueue.main.async {
+                    self.handleWeatherErrorMessage?("エラー a123456")
+                }
             } catch {
-                self.onWeatherError?("エラー　c321654")
+                DispatchQueue.main.async {
+                    self.handleWeatherErrorMessage?("エラー b654321")
+                }
             }
         }
-
+    }
 }
