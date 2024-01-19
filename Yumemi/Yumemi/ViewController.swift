@@ -28,21 +28,24 @@ class ViewController: UIViewController {
             object: nil
         )
         
-        weatherDetail.handleWeatherCondition = {weatherImage, maxTemperature, minTemperature
-            in
-            self.complitionWeather(weather: weatherImage, max: maxTemperature, min: minTemperature)
-        }
-        
-        weatherDetail.handleWeatherErrorMessage = {errormessage
-            in
-            self.complitionWeatherError(alert: errormessage)
+    }
+    
+    @objc func reloadWeather() {
+        indicator.startAnimating()
+        weatherDetail.setWeatherInfo { result in
+            DispatchQueue.main.async{
+                self.indicator.stopAnimating()
+            }
+            switch result {
+            case .success(let (weather, max, min)):
+                self.complitionWeather(weather: weather, max: max, min: min)
+            case .failure(let error):
+                self.completionWeatherError(alert: "Error: \(error.localizedDescription)")
+            }
         }
         
     }
     
-    @objc func reloadWeather() {
-        weatherDetail.setWeatherInfo(handle: complitionWeather(weather:max:min:))
-    }
     
     @IBAction func closeButton(_ sender: Any) {
         dismiss(animated: true)
@@ -50,13 +53,13 @@ class ViewController: UIViewController {
     
     @IBAction func reloadButton(_ sender: Any) {
         indicator.startAnimating()
-        weatherDetail.setWeatherInfo(handle: complitionWeather(weather:max:min:))
+        reloadWeather()
     }
     
 }
 
 extension ViewController {
-    func complitionWeatherError(alert: String) {
+    func completionWeatherError(alert: String) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: alert, message: "時間をおいてもう一度お試しください", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
