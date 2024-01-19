@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         
         weatherDetail.handleWeatherCondition = {weatherImage, maxTemperature, minTemperature
             in
-            self.complitionWeather(weatherCondition: weatherImage, maxTemperature: maxTemperature, minTemperature: minTemperature)
+            self.complitionWeather(weather: weatherImage, max: maxTemperature, min: minTemperature)
         }
         
         weatherDetail.handleWeatherErrorMessage = {errormessage
@@ -41,7 +41,7 @@ class ViewController: UIViewController {
     }
     
     @objc func reloadWeather() {
-        weatherDetail.setWeatherInfo(handle: complitionWeather(weatherCondition:maxTemperature:minTemperature:))
+        weatherDetail.setWeatherInfo(handle: complitionWeather(weather:max:min:))
     }
     
     @IBAction func closeButton(_ sender: Any) {
@@ -50,7 +50,7 @@ class ViewController: UIViewController {
     
     @IBAction func reloadButton(_ sender: Any) {
         indicator.startAnimating()
-        weatherDetail.setWeatherInfo(handle: complitionWeather(weatherCondition:maxTemperature:minTemperature:))
+        weatherDetail.setWeatherInfo(handle: complitionWeather(weather:max:min:))
     }
     
 }
@@ -66,11 +66,11 @@ extension ViewController {
         
     }
     
-    func complitionWeather(weatherCondition: String, maxTemperature: Int, minTemperature: Int) {
+    func complitionWeather(weather: String, max: Int, min: Int) {
         var weatherName = "sunny"
         var tintColor = UIColor.red
         
-        switch weatherCondition {
+        switch weather {
         case "sunny":
             weatherName = "sunny"
             tintColor = UIColor.red
@@ -86,8 +86,8 @@ extension ViewController {
         DispatchQueue.main.async {
             self.weatherImage.image = UIImage(named: weatherName)
             self.weatherImage.tintColor = tintColor
-            self.maxTemperature.text = String(maxTemperature)
-            self.minTemperature.text = String(minTemperature)
+            self.maxTemperature.text = String(max)
+            self.minTemperature.text = String(min)
             self.indicator.stopAnimating()
         }
         
