@@ -38,15 +38,15 @@ class ViewController: UIViewController {
     func reloadWeather() async {
         indicator.startAnimating()
         let result = await weatherDetail.setWeatherInfo()
-            
-            self.indicator.stopAnimating()
-            
-            switch result {
-            case .success(let (weather, max, min)):
-                self.complitionWeather(weather: weather, max: max, min: min)
-            case .failure(let error):
-                self.completionWeatherError(alert: "Error: \(error.localizedDescription)")
-            }
+        
+        self.indicator.stopAnimating()
+        
+        switch result {
+        case .success(let (weather, max, min)):
+            self.complitionWeather(weather: weather, max: max, min: min)
+        case .failure(let error):
+            self.completionWeatherError(alert: "Error: \(error.localizedDescription)")
+        }
         
     }
     
