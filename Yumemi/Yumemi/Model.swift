@@ -25,7 +25,7 @@ class WeatherDetail {
                 return .success(("", 0, 0))
             }
             
-            let responseWeatherString = try YumemiWeather.syncFetchWeather(jsonValue)
+            let responseWeatherString = try await YumemiWeather.asyncFetchWeather(jsonValue)
             
             guard let jsonData = responseWeatherString.data(using: .utf8),
                   let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any],
