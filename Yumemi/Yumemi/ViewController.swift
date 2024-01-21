@@ -30,12 +30,14 @@ class ViewController: UIViewController {
     }
     
     @objc func appForeground() {
-        reloadWeather()
+        Task{
+            await reloadWeather()
+        }
     }
     
-    func reloadWeather() {
+    func reloadWeather() async {
         indicator.startAnimating()
-        weatherDetail.setWeatherInfo { result in
+        let result = await weatherDetail.setWeatherInfo()
             
             self.indicator.stopAnimating()
             
@@ -45,7 +47,7 @@ class ViewController: UIViewController {
             case .failure(let error):
                 self.completionWeatherError(alert: "Error: \(error.localizedDescription)")
             }
-        }
+        
     }
     
     @IBAction func closeButton(_ sender: Any) {
@@ -53,7 +55,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func reloadButton(_ sender: Any) {
-        reloadWeather()
+        Task{
+            await reloadWeather()
+        }
     }
     
     func completionWeatherError(alert: String) {

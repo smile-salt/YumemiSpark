@@ -15,36 +15,31 @@ struct jsonString: Codable {
 
 class WeatherDetail {
     
-    func setWeatherInfo(completion: @escaping (Result<(String,Int,Int), Error>) -> ()) {
-        DispatchQueue.global().async{
-            let sendJsonString = jsonString(area:"tokyo", date:"2020-04-01T12:00:00+09:00")
-            
-            do {
-                let encoder = JSONEncoder()
-                let jsonData = try encoder.encode(sendJsonString)
-                guard let jsonValue = String(data: jsonData, encoding: .utf8) else {
-                    return
-                }
-                
-                let responseWeatherString = try YumemiWeather.syncFetchWeather(jsonValue)
-                
-                guard let jsonData = responseWeatherString.data(using: .utf8),
-                      let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any],
-                      let maxTemperature = json["max_temperature"] as? Int,
-                      let minTemperature = json["min_temperature"] as? Int,
-                      let weatherCondition = json["weather_condition"] as? String
-                else {
-                    return
-                }
-                DispatchQueue.main.async {
-                    completion(.success((weatherCondition,maxTemperature,minTemperature)))
-                }
-                
-            } catch {
-                DispatchQueue.main.async {
-                    completion(.failure(error))
-                }
+    func setWeatherInfo() async -> Result<(String,Int,Int), Error> {
+        let sendJsonString = jsonString(area:"tokyo", date:"2020-04-01T12:00:00+09:00")
+        
+        do {
+            let encoder = JSONEncoder()
+            let jsonData = try encoder.encode(sendJsonString)
+            guard let jsonValue = String(data: jsonData, encoding: .utf8) else {
+                return .success(("", 0, 0))
             }
+            
+            let responseWeatherString = try YumemiWeather.syncFetchWeather(jsonValue)
+            
+            guard let jsonData = responseWeatherString.data(using: .utf8),
+                  let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any],
+                  let maxTemperature = json["max_temperature"] as? Int,
+                  let minTemperature = json["min_temperature"] as? Int,
+                  let weatherCondition = json["weather_condition"] as? String
+            else {
+                return .success(("", 0, 0))
+            }
+            return (.success((weatherCondition,maxTemperature,minTemperature)))
+            
+        } catch {
+            return (.failure(error))
         }
+        
     }
 }
