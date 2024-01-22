@@ -13,12 +13,6 @@ struct jsonString: Codable {
     let date: String
 }
 
-struct WeatherResponse: Codable {
-    let weather_condition: String
-    let max_temperature: Int
-    let min_temperature: Int
-}
-
 class WeatherDetail {
     
     func setWeatherInfo() async -> Result<(String,Int,Int), Error> {
@@ -28,20 +22,20 @@ class WeatherDetail {
             let encoder = JSONEncoder()
             let jsonData = try encoder.encode(sendJsonString)
             guard let jsonValue = String(data: jsonData, encoding: .utf8) else {
-                return (.failure(YumemiWeatherError.unknownError))
+                return .success(("", 0, 0))
             }
             
             let responseWeatherString = try await YumemiWeather.asyncFetchWeather(jsonValue)
             
-            guard let jsonData = responseWeatherString.data(using: .utf8) else {
-                return (.failure(YumemiWeatherError.unknownError))
+            guard let jsonData = responseWeatherString.data(using: .utf8),
+                  let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any],
+                  let maxTemperature = json["max_temperature"] as? Int,
+                  let minTemperature = json["min_temperature"] as? Int,
+                  let weatherCondition = json["weather_condition"] as? String
+            else {
+                return .success(("", 0, 0))
             }
-            
-            
-            let decoder = JSONDecoder()
-            let weatherResponse = try decoder.decode(WeatherResponse.self, from: jsonData)
-
-            return (.success((weatherResponse.weather_condition,weatherResponse.max_temperature,weatherResponse.min_temperature)))
+            return (.success((weatherCondition,maxTemperature,minTemperature)))
             
         } catch {
             return (.failure(error))
