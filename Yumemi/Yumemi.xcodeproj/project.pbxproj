@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		504735A82B5E91B600A87AAB /* StartListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504735A72B5E91B600A87AAB /* StartListController.swift */; };
 		E17200522B58A5CA00D0E48B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17200512B58A5CA00D0E48B /* AppDelegate.swift */; };
 		E17200542B58A5CA00D0E48B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17200532B58A5CA00D0E48B /* SceneDelegate.swift */; };
 		E17200562B58A5CA00D0E48B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17200552B58A5CA00D0E48B /* ViewController.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		504735A72B5E91B600A87AAB /* StartListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartListController.swift; sourceTree = "<group>"; };
 		E172004E2B58A5CA00D0E48B /* Yumemi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yumemi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E17200512B58A5CA00D0E48B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E17200532B58A5CA00D0E48B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 				E17200512B58A5CA00D0E48B /* AppDelegate.swift */,
 				E17200532B58A5CA00D0E48B /* SceneDelegate.swift */,
 				E17200682B58ABCB00D0E48B /* LifeCycleViewController.swift */,
+				504735A72B5E91B600A87AAB /* StartListController.swift */,
 				E17200552B58A5CA00D0E48B /* ViewController.swift */,
 				E172006A2B58ADF500D0E48B /* Model.swift */,
 				E172005A2B58A5CC00D0E48B /* Assets.xcassets */,
@@ -157,6 +160,7 @@
 				E17200522B58A5CA00D0E48B /* AppDelegate.swift in Sources */,
 				E17200542B58A5CA00D0E48B /* SceneDelegate.swift in Sources */,
 				E17200692B58ABCB00D0E48B /* LifeCycleViewController.swift in Sources */,
+				504735A82B5E91B600A87AAB /* StartListController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

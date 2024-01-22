@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController {
     
     let weatherDetail = WeatherDetail()
+    var selectedWeatherList: WeatherList?
     
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var maxTemperature: UILabel!
