@@ -13,7 +13,6 @@ class StartListController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBOutlet weak var weatherList: UITableView!
     
-    let weatherDetailList = WeatherDetailList()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +22,7 @@ class StartListController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
