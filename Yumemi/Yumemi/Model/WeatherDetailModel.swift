@@ -8,17 +8,6 @@
 import Foundation
 import YumemiWeather
 
-struct jsonString: Codable {
-    let area: String
-    let date: String
-}
-
-struct WeatherResponse: Codable {
-    let weather_condition: String
-    let max_temperature: Int
-    let min_temperature: Int
-}
-
 class WeatherDetail {
     
     func setWeatherInfo() async -> Result<(String,Int,Int), Error> {
@@ -41,7 +30,9 @@ class WeatherDetail {
             let decoder = JSONDecoder()
             let weatherResponse = try decoder.decode(WeatherResponse.self, from: jsonData)
 
-            return (.success((weatherResponse.weather_condition,weatherResponse.max_temperature,weatherResponse.min_temperature)))
+            return (.success((weatherResponse.weather_condition,
+                              weatherResponse.max_temperature,
+                              weatherResponse.min_temperature)))
             
         } catch {
             return (.failure(error))
@@ -49,4 +40,3 @@ class WeatherDetail {
         
     }
 }
-

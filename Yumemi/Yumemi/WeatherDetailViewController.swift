@@ -10,7 +10,7 @@ import UIKit
 class ViewController: UIViewController {
     
     let weatherDetail = WeatherDetail()
-
+    var area: AreaResponse?
     
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var maxTemperature: UILabel!
@@ -28,6 +28,31 @@ class ViewController: UIViewController {
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
+        showData()
+    }
+    
+    func showData() {
+        guard let area = self.area else { return }
+        
+        var weatherName = "sunny"
+        var tintColor = UIColor.red
+        switch area.info.weather_condition {
+        case "sunny":
+            weatherName = "sunny"
+            tintColor = UIColor.red
+        case "cloudy":
+            weatherName = "cloudy"
+            tintColor = UIColor.gray
+        case "rainy":
+            weatherName = "rainy"
+            tintColor = UIColor.blue
+        default:
+            break
+        }
+        self.weatherImage.image = UIImage(named: weatherName)
+        self.weatherImage.tintColor = tintColor
+        self.maxTemperature.text = String(area.info.max_temperature)
+        self.minTemperature.text = String(area.info.min_temperature)
     }
     
     @objc func appForeground() {
@@ -44,7 +69,7 @@ class ViewController: UIViewController {
         
         switch result {
         case .success(let (weather, max, min)):
-            self.complitionWeather(weather: weather, max: max, min: min)
+            self.completionWeather(weather: weather, max: max, min: min)
         case .failure(let error):
             self.completionWeatherError(alert: "Error: \(error.localizedDescription)")
         }
@@ -68,7 +93,7 @@ class ViewController: UIViewController {
         
     }
     
-    func complitionWeather(weather: String, max: Int, min: Int) {
+    func completionWeather(weather: String, max: Int, min: Int) {
         var weatherName = "sunny"
         var tintColor = UIColor.red
         
