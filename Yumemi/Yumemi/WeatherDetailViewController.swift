@@ -28,6 +28,9 @@ class ViewController: UIViewController {
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
+        if let areaName = area?.area {
+            navigationItem.title = areaName.rawValue
+        }
         showData()
     }
     
@@ -77,7 +80,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func closeButton(_ sender: Any) {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func reloadButton(_ sender: Any) {

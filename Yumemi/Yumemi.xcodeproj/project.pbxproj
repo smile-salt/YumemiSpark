@@ -93,12 +93,12 @@
 			children = (
 				E17200512B58A5CA00D0E48B /* AppDelegate.swift */,
 				E17200532B58A5CA00D0E48B /* SceneDelegate.swift */,
-				E16FB3252B62147F006D2DFC /* View */,
-				E16FB3242B621463006D2DFC /* Model */,
-				E172005A2B58A5CC00D0E48B /* Assets.xcassets */,
 				E17200572B58A5CA00D0E48B /* Main.storyboard */,
 				E172005C2B58A5CC00D0E48B /* LaunchScreen.storyboard */,
+				E172005A2B58A5CC00D0E48B /* Assets.xcassets */,
 				E172005F2B58A5CC00D0E48B /* Info.plist */,
+				E16FB3252B62147F006D2DFC /* View */,
+				E16FB3242B621463006D2DFC /* Model */,
 			);
 			path = Yumemi;
 			sourceTree = "<group>";
