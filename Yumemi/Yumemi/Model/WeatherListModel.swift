@@ -22,6 +22,7 @@ class WeatherDetailList {
             }
 
             let responseString = try await YumemiWeather.asyncFetchWeatherList(jsonValue)
+            print(responseString)
             guard let jsonData = responseString.data(using: .utf8) else {
                 return .failure(YumemiWeatherError.unknownError)
             }
