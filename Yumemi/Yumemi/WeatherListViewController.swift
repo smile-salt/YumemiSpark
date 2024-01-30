@@ -91,13 +91,10 @@ class StartListController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-            if let indexPath = weatherList.indexPathForSelectedRow {
-                guard let destination = segue.destination as? ViewController else {
-                    fatalError("Failed to prepare ViewController.")
-                }
-                destination.area = areas[indexPath.row]
-            }
+        if segue.identifier == "showDetail",
+           let indexPath = weatherList.indexPathForSelectedRow,
+           let destination = segue.destination as? ViewController {
+            destination.area = areas[indexPath.row]
         }
     }
     
