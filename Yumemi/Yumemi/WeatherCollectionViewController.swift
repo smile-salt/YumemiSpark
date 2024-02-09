@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeatherCollectionViewController: UIViewController, UICollectionViewDataSource{
+class WeatherCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
@@ -87,19 +87,20 @@ class WeatherCollectionViewController: UIViewController, UICollectionViewDataSou
             }
         }
     }
-
+    
 }
+
 
 extension WeatherCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // 端末サイズの半分のwidthとheightにして2列にする
-        let width: CGFloat = collectionView.frame.width / 2
-        let height = width
-        return CGSize(width: width, height: height)
+        let screenWidth = UIScreen.main.bounds.width
+        let cellWidth: CGFloat = screenWidth / 4
+        let cellHeight = cellWidth
+        print("セルサイズ: \(CGSize(width: cellWidth, height: cellHeight))")
+        return CGSize(width: cellWidth, height: cellHeight)
     }
     
-    // 間の線
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
@@ -109,3 +110,4 @@ extension WeatherCollectionViewController: UICollectionViewDelegateFlowLayout {
     }
     
 }
+
